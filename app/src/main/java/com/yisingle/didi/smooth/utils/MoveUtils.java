@@ -29,11 +29,21 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
     }
 
 
+    /**
+     * @param latLng     坐标
+     * @param time       时间
+     * @param isContinue 是否在上次停止的坐标点继续移动
+     */
     public void startMove(LatLng latLng, int time, boolean isContinue) {
         List<LatLng> list = new ArrayList<>();
         startMove(list, time, isContinue);
     }
 
+    /**
+     * @param list       坐标数组
+     * @param time       时间   多长时间走完这些数组
+     * @param isContinue 是否在上次停止的坐标点继续移动
+     */
     public void startMove(List<LatLng> list, int time, boolean isContinue) {
         if (time <= 0) {
             //如果传递过来的参数时间小于等于0
@@ -69,15 +79,20 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
 
     }
 
-
+    /**
+     * 停止移动
+     */
     public void stop() {
         customAnimator.end();
     }
 
+    /**
+     * 摧毁
+     */
     public void destory() {
         callBack = null;
         customAnimator.setOnTimeListener(null);
-        customAnimator.end();
+        customAnimator.destory();
     }
 
     @Override

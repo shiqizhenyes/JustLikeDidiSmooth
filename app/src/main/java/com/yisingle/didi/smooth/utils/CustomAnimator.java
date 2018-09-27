@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.autonavi.amap.mapcore.IPoint;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -157,6 +156,12 @@ public class CustomAnimator {
     public CustomAnimator setOnTimeListener(OnTimeListener onTimeListener) {
         this.onTimeListener = onTimeListener;
         return this;
+    }
+
+    public void destory() {
+        end();
+        mThreadPools.shutdownNow();
+
     }
 
     public interface OnTimeListener {
