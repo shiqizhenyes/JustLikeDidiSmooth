@@ -30,9 +30,12 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
 
 
     /**
-     * @param latLng     坐标
-     * @param time       时间
-     * @param isContinue 是否在上次停止的坐标点继续移动
+     *
+     * @param latLng 坐标
+     * @param time   时间 毫秒
+     * @param isContinue 是否在以上次停止后的坐标点继续移动 当list.size()=1 isContinue 就会变的非常有用
+     * 注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
+    那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
     public void startMove(LatLng latLng, int time, boolean isContinue) {
         List<LatLng> list = new ArrayList<>();
@@ -40,9 +43,12 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
     }
 
     /**
-     * @param list       坐标数组
-     * @param time       时间   多长时间走完这些数组
-     * @param isContinue 是否在上次停止的坐标点继续移动
+     *
+     * @param list 坐标数组
+     * @param time 时间   毫秒 多长时间走完这些数组
+     * @param isContinue 是否在以上次停止后的坐标点继续移动 当list.size()=1
+     * 注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
+    那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
     public void startMove(List<LatLng> list, int time, boolean isContinue) {
         if (time <= 0) {
@@ -95,6 +101,21 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
         customAnimator.destory();
     }
 
+
+    public OnCallBack getCallBack() {
+        return callBack;
+    }
+
+
+    /**
+     * 设置监听回调
+     *
+     * @param callBack OnCallBack
+     */
+    public void setCallBack(OnCallBack callBack) {
+        this.callBack = callBack;
+    }
+
     @Override
     public void onUpdate(IPoint start, IPoint moveIPoint, IPoint end) {
         if (null != callBack) {
@@ -108,13 +129,11 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
 
 
         /**
-         * 设置坐标IPoint
-         * <p>
-         * 角度返回  这里的角度返回是根据两个点坐标来计算汽车在地图上的角度的
-         * 并不是传感器返回的
-         *
-         * @param point  IPoint
-         * @param rotate 角度
+         * @param point  IPoint 移动坐标IPoint
+         * @param rotate 角度 角度返回  这里的角度返回是根据两个点坐标来计算汽车在地图上的角度的
+         *               并不是传感器返回的
+         *               如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
+         *               那么 onSetGeoPoint回调方法返回的角度是0
          */
         void onSetGeoPoint(IPoint point, float rotate);
     }
@@ -131,11 +150,5 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
         }
     }
 
-    public OnCallBack getCallBack() {
-        return callBack;
-    }
 
-    public void setCallBack(OnCallBack callBack) {
-        this.callBack = callBack;
-    }
 }
