@@ -51,6 +51,7 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
     那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
     public void startMove(List<LatLng> list, int time, boolean isContinue) {
+        stop();
         if (time <= 0) {
             //如果传递过来的参数时间小于等于0
             time = 10;
