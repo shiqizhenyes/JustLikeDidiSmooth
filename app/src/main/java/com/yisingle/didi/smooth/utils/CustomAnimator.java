@@ -1,7 +1,6 @@
 package com.yisingle.didi.smooth.utils;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.autonavi.amap.mapcore.IPoint;
 
@@ -86,7 +85,6 @@ public class CustomAnimator {
     public void end() {
         if (null != customRunnable) {
             customRunnable.exitFlag.set(true);
-            Log.e("测试代码", "测试代码停止=end");
         }
         //----cancale
     }
