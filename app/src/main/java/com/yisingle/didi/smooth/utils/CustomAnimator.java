@@ -126,7 +126,12 @@ public class CustomAnimator {
                         int plugY = end.y - start.y;
 
 
-                        float percent = (float) time / duration / (pointList.size() - 1);
+                        int intervalSize = pointList.size() - 1;
+
+                        float intervalDuration = (float) duration / intervalSize;
+
+                        float percent = (float) time / intervalDuration;
+
 
                         IPoint moveIPoint = new IPoint((int) ((double) start.x + (double) plugX * (percent - index)), (int) ((double) start.y + (double) plugY * (percent - index)));
                         if (percent - index >= 1) {
