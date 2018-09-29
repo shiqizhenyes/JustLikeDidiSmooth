@@ -23,21 +23,13 @@ public class CustomAnimator {
     private ExecutorService mThreadPools;
 
 
-    private long startTime;
-
-    private int duration = 1000;
-
-
-    private List<IPoint> pointList = new ArrayList<>();
-
-
-    private int index = 0;
-
-
     private CustomRunnable customRunnable;
 
 
     private OnTimeListener onTimeListener;
+
+
+    List<IPoint> iPointList;
 
 
     public CustomAnimator() {
@@ -76,7 +68,7 @@ public class CustomAnimator {
 
 
     public CustomAnimator ofIPoints(List<IPoint> list) {
-        this.pointList = list;
+        this.iPointList = list;
         return this;
 
     }
@@ -84,10 +76,8 @@ public class CustomAnimator {
 
     public void start(int duration) {
         end();
-        this.duration = duration;
-        index = 0;
-        startTime = System.currentTimeMillis();
-        customRunnable = new CustomRunnable();
+
+        customRunnable = new CustomRunnable(iPointList, duration);
         customRunnable.exitFlag.set(false);
         mThreadPools.submit(customRunnable);
     }
@@ -104,9 +94,22 @@ public class CustomAnimator {
     public class CustomRunnable implements Runnable {
         AtomicBoolean exitFlag = new AtomicBoolean(false);
 
+        private long startTime;
 
-        private CustomRunnable() {
+        private int duration = 1000;
 
+
+        private List<IPoint> pointList;
+
+
+        private int index = 0;
+
+
+        private CustomRunnable(List<IPoint> list, int duration) {
+            this.duration = duration;
+            index = 0;
+            this.pointList = list;
+            startTime = System.currentTimeMillis();
 
         }
 
@@ -132,7 +135,6 @@ public class CustomAnimator {
 
                         float percent = (float) time / intervalDuration;
 
-
                         IPoint moveIPoint = new IPoint((int) ((double) start.x + (double) plugX * (percent - index)), (int) ((double) start.y + (double) plugY * (percent - index)));
                         if (percent - index >= 1) {
                             index = index + 1;
@@ -150,10 +152,6 @@ public class CustomAnimator {
                 }
             }
             //--线程结束
-
-            pointList.clear();
-
-
         }
     }
 
