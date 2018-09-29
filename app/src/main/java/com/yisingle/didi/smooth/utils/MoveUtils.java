@@ -30,12 +30,11 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
 
 
     /**
-     *
-     * @param latLng 坐标
-     * @param time   时间 毫秒
+     * @param latLng     坐标
+     * @param time       时间 毫秒
      * @param isContinue 是否在以上次停止后的坐标点继续移动 当list.size()=1 isContinue 就会变的非常有用
-     * 注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
-    那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
+     *                   注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
+     *                   那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
     public void startMove(LatLng latLng, int time, boolean isContinue) {
         List<LatLng> list = new ArrayList<>();
@@ -43,15 +42,13 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
     }
 
     /**
-     *
-     * @param list 坐标数组
-     * @param time 时间   毫秒 多长时间走完这些数组
+     * @param list       坐标数组
+     * @param time       时间   毫秒 多长时间走完这些数组
      * @param isContinue 是否在以上次停止后的坐标点继续移动 当list.size()=1
-     * 注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
-    那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
+     *                   注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
+     *                   那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
     public void startMove(List<LatLng> list, int time, boolean isContinue) {
-        stop();
         if (time <= 0) {
             //如果传递过来的参数时间小于等于0
             time = 10;
@@ -75,6 +72,7 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
 
         } else if (null != list && pointList.size() == 1) {
             if (null != callBack) {
+                startIPoint = pointList.get(0);
                 callBack.onSetGeoPoint(pointList.get(0), 0);
             }
 
@@ -120,6 +118,7 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
     @Override
     public void onUpdate(IPoint start, IPoint moveIPoint, IPoint end) {
         if (null != callBack) {
+            startIPoint = moveIPoint;
             callBack.onSetGeoPoint(moveIPoint, getRotate(start, end));
         }
 
@@ -150,6 +149,4 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
             return 0.0F;
         }
     }
-
-
 }
