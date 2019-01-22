@@ -5,7 +5,6 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.autonavi.amap.mapcore.IPoint;
 import com.yisingle.didi.smooth.R;
 import com.yisingle.didi.smooth.utils.MoveUtils;
 
@@ -34,9 +33,9 @@ public class MoveMarker {
 
         moveUtils.setCallBack(new MoveUtils.OnCallBack() {
             @Override
-            public void onSetGeoPoint(IPoint point, float rotate) {
+            public void onSetLatLng(LatLng latLng, float rotate) {
                 if (!marker.isRemoved()) {
-                    marker.setGeoPoint(point);
+                    marker.setPosition(latLng);
                     //车辆方向
                     float carDirection = 360.0F - rotate + getAMap().getCameraPosition().bearing;
                     marker.setRotateAngle(carDirection);

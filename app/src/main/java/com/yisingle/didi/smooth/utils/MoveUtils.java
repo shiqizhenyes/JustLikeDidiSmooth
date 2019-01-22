@@ -3,6 +3,7 @@ package com.yisingle.didi.smooth.utils;
 import android.util.Log;
 
 import com.amap.api.maps.model.LatLng;
+import com.autonavi.amap.mapcore.DPoint;
 import com.autonavi.amap.mapcore.IPoint;
 import com.autonavi.amap.mapcore.MapProjection;
 
@@ -73,7 +74,9 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
         } else if (null != list && pointList.size() == 1) {
             if (null != callBack) {
                 startIPoint = pointList.get(0);
-                callBack.onSetGeoPoint(pointList.get(0), 0);
+                DPoint dPoint = new DPoint();
+                MapProjection.geo2LonLat(startIPoint.x, startIPoint.y, dPoint);
+                callBack.onSetLatLng(new LatLng(dPoint.y, dPoint.x), 0);
             }
 
         } else {
@@ -119,7 +122,11 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
     public void onUpdate(IPoint start, IPoint moveIPoint, IPoint end) {
         if (null != callBack) {
             startIPoint = moveIPoint;
-            callBack.onSetGeoPoint(moveIPoint, getRotate(start, end));
+
+            DPoint dPoint = new DPoint();
+            MapProjection.geo2LonLat(startIPoint.x, startIPoint.y, dPoint);
+
+            callBack.onSetLatLng(new LatLng(dPoint.y, dPoint.x), getRotate(start, end));
         }
 
     }
@@ -129,13 +136,13 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
 
 
         /**
-         * @param point  IPoint 移动坐标IPoint
+         * @param latLng IPoint 移动坐标IPoint
          * @param rotate 角度 角度返回  这里的角度返回是根据两个点坐标来计算汽车在地图上的角度的
          *               并不是传感器返回的
          *               如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
          *               那么 onSetGeoPoint回调方法返回的角度是0
          */
-        void onSetGeoPoint(IPoint point, float rotate);
+        void onSetLatLng(LatLng latLng, float rotate);
     }
 
 
