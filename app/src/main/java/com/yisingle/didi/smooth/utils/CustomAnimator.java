@@ -73,7 +73,7 @@ public class CustomAnimator {
     }
 
 
-    public void start(int duration) {
+    public void start(long duration) {
         end();
 
         customRunnable = new CustomRunnable(iPointList, duration);
@@ -94,7 +94,7 @@ public class CustomAnimator {
 
         private long startTime;
 
-        private int duration = 1000;
+        private long duration = 1000l;
 
 
         private List<IPoint> pointList;
@@ -103,7 +103,7 @@ public class CustomAnimator {
         private int index = 0;
 
 
-        private CustomRunnable(List<IPoint> list, int duration) {
+        private CustomRunnable(List<IPoint> list, long duration) {
             this.duration = duration;
             index = 0;
             this.pointList = list;

@@ -37,7 +37,7 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
      *                   注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
      *                   那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
-    public void startMove(LatLng latLng, int time, boolean isContinue) {
+    public void startMove(LatLng latLng, long time, boolean isContinue) {
         List<LatLng> list = new ArrayList<>();
         startMove(list, time, isContinue);
     }
@@ -49,7 +49,7 @@ public class MoveUtils implements CustomAnimator.OnTimeListener {
      *                   注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
      *                   那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
-    public void startMove(List<LatLng> list, int time, boolean isContinue) {
+    public void startMove(List<LatLng> list, long time, boolean isContinue) {
         if (time <= 0) {
             //如果传递过来的参数时间小于等于0
             time = 10;
