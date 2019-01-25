@@ -35,7 +35,7 @@
      * 注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
      那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
-    public void startMove(List<LatLng> list, int time, boolean isContinue)
+    public void startMove(List<LatLng> list, long time, boolean isContinue)
     
     
     
@@ -48,7 +48,7 @@
      * 注意:如果调用 startMove(list,time,isContinue) 如果list.size=1 只传递了一个点并且isContinue=false
      那么 onSetGeoPoint回调方法返回的角度是0 因为只有一个点是无法计算角度的
      */
-    public void startMove(LatLng latLng, int time, boolean isContinue)
+    public void startMove(LatLng latLng, long time, boolean isContinue)
     
     
     /**
@@ -85,7 +85,7 @@
          * @param point  IPoint
          * @param rotate 角度
          */
-        void onSetGeoPoint(IPoint point, float rotate);
+        void onSetGeoPoint(LatLng latLng, float rotate);
     }
 ```    
 
@@ -100,9 +100,9 @@
       
     moveUtils.setCallBack(new MoveUtils.OnCallBack() {
             @Override
-            public void onSetGeoPoint(IPoint point, float rotate) {
+            public void onSetGeoPoint(LatLng latLng, float rotate) {
                 if (!marker.isRemoved()) {
-                    marker.setGeoPoint(point);
+                    marker.setPosition(point);
                     //获取实际车辆方向。
                     float carDirection = 360.0F - rotate + getAMap().getCameraPosition().bearing;
                     marker.setRotateAngle(carDirection);
@@ -124,7 +124,7 @@
 
 
 
-## 源码
+## 源码   你只需要下载两个类就可以完成 平滑移动的效果 如下图:所示
 
 > MoveUtils
 
