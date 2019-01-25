@@ -1,6 +1,6 @@
 # 仿滴滴多个车辆平滑移动效果 
 
-我们先看下效果图:
+我们先看下效果图: gif 图片有点卡 但是apk上的效果很好 很流畅。
 
 ![image](https://github.com/jikun2008/JustLikeDidiSmooth/blob/master/pic/%E4%BB%BF%E6%BB%B4%E6%BB%B4%E5%A4%9A%E4%B8%AA%E8%BD%A6%E8%BE%86%E7%A7%BB%E5%8A%A8.gif?raw=true)
 
